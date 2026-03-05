@@ -8,8 +8,8 @@ export const verifyJwt=asyncHandler(
     async(req,res,next)=>{
 
    try{
-     const token=req.cookies?.accessToken || req.header
-    ('Authorization')?.replace('Bearer ','');
+     const token=req.cookies?.accessToken || 
+              req.headers.authorization?.replace(/^Bearer\s+/i, '');
 
     if(!token){
         return res.status(401).json({message:'Unauthorized'});
@@ -18,12 +18,12 @@ export const verifyJwt=asyncHandler(
     const decoded=jwt.verify(token,process.env.JWT_SECRET);
     const user=await User.findById(decoded._id).select('-password -refreshToken');
 if(!user){
-    return res.status(401).json({message:'Unauthorized'});  
+    return res.status(401).json({message:'Unauthorizeddd'});  
 }
     req.user=user;
     next();
    }catch(error){
-    return res.status(401).json({message:'Unauthorized'});
+    return res.status(401).json({message:'Unauthorizedddddddddddddddddd'});
    }
 
    

@@ -18,7 +18,8 @@ registerUser);
 
 router.route('/login').post(loginUser);
 
-router.route('/bloodbanks').get(getBloodBanks)
+
+router.route('/bloodbanks').get(getBloodBanks);
 //secured route
 
 export default router; 

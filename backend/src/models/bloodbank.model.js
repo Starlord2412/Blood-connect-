@@ -39,5 +39,7 @@ required:true
 
 
 },{timestamps:true});
-const BloodBank = mongoose.model("BloodBank", bloodBankSchema);
+const BloodBank = mongoose.model("BloodBank", bloodBankSchema,"bloodbank");
+
+
 export default BloodBank;       

@@ -59,6 +59,10 @@ const user= await User.create({
   // username:username.toLowerCase()
 })
 
+
+
+
+
 const createdUser=await User.findById(user._id).select("-password -refreshToken");
 
 if(!createdUser){
@@ -124,24 +128,17 @@ const loginUser = asyncHandler(async (req, res) => {
 
 
 //find the bloodbanks based on the city/loction of user 
+const getBloodBanks = asyncHandler(async (req, res) => {
 
-const getBloodBanks =asyncHandler(async(req,res)=>{
-  //get user location from req.user
-  //find bloodbanks in that location 
-  //return response
-const user=req.user
-  const userLocation=user.city;
+  const userCity = req.user.city;
 
-  const bloodBanks=await BloodBank.find({
-    $and: [
-      { city: userLocation },
-      { isOpen: true }
-    ]
-  });
+  const bloodbanks = await BloodBank.find({ city: userCity, isOpen: true });
+   
 
-  return res.status(200).json(
-    new ApiResponse(200,bloodBanks,"Blood banks fetched successfully")
-  )
+
+  res.status(200).json(
+    new ApiResponse(200, bloodbanks, `${bloodbanks.length} open blood banks found`)
+  );
 });
 
 

@@ -78,7 +78,7 @@ return jwt.sign({
     userType:this.userType
 }
 ,
-process.env.ACCESS_TOKEN_SECRET,{
+  process.env.ACCESS_TOKEN_SECRET,{
     expiresIn:process.env.ACCESS_TOKEN_EXPIRES_IN
 })
 }
