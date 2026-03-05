@@ -1,0 +1,90 @@
+[
+  {
+    "id": "1",
+    "name": "Amravati Central Blood Bank",
+    "address": "Near Railway Station, Amravati",
+    "phone": "+91 1234567890",
+    "city": "Amravati",
+    "lat": 20.9336,
+    "lng": 77.7500,
+    "isOpen": true,
+    "inventory": { "O+": 20, "O-": 10, "A+": 15, "A-": 5, "B+": 10, "B-": 3, "AB+": 7, "AB-": 2 }
+  },
+  {
+    "id": "2",
+    "name": "Red Cross Blood Bank",
+    "address": "Near Civil Hospital, Amravati",
+    "phone": "+91 9876543210",
+    "city": "Amravati",
+    "lat": 20.9400,
+    "lng": 77.7600,
+    "isOpen": true,
+    "inventory": { "O+": 15, "O-": 5, "A+": 10, "A-": 4, "B+": 8, "B-": 2, "AB+": 5, "AB-": 1 }
+  },
+  {
+    "id": "3",
+    "name": "Nagpur District Blood Bank",
+    "address": "Indora Chowk, Nagpur",
+    "phone": "+91 7121234567",
+    "city": "Nagpur",
+    "lat": 21.1458,
+    "lng": 79.0882,
+    "isOpen": true,
+    "inventory": { "O+": 30, "O-": 12, "A+": 25, "A-": 10, "B+": 18, "B-": 7, "AB+": 12, "AB-": 4 }
+  },
+  {
+    "id": "4",
+    "name": "City Hospital Blood Bank",
+    "address": "Civil Lines, Nagpur",
+    "phone": "+91 7129876543",
+    "city": "Nagpur",
+    "lat": 21.1505,
+    "lng": 79.0900,
+    "isOpen": true,
+    "inventory": { "O+": 20, "O-": 10, "A+": 15, "A-": 5, "B+": 10, "B-": 3, "AB+": 7, "AB-": 2 }
+  },
+  {
+    "id": "5",
+    "name": "Pune Red Cross Blood Bank",
+    "address": "Shivaji Nagar, Pune",
+    "phone": "+91 0201234567",
+    "city": "Pune",
+    "lat": 18.5204,
+    "lng": 73.8567,
+    "isOpen": true,
+    "inventory": { "O+": 25, "O-": 8, "A+": 18, "A-": 6, "B+": 12, "B-": 4, "AB+": 9, "AB-": 3 }
+  },
+  {
+    "id": "6",
+    "name": "Aurangabad Blood Bank",
+    "address": "CIDCO, Aurangabad",
+    "phone": "+91 0240123456",
+    "city": "Aurangabad",
+    "lat": 19.8762,
+    "lng": 75.3433,
+    "isOpen": true,
+    "inventory": { "O+": 18, "O-": 7, "A+": 12, "A-": 5, "B+": 10, "B-": 3, "AB+": 6, "AB-": 2 }
+  },
+  {
+    "id": "7",
+    "name": "Mumbai General Blood Bank",
+    "address": "Andheri West, Mumbai",
+    "phone": "+91 0221234567",
+    "city": "Mumbai",
+    "lat": 19.0760,
+    "lng": 72.8777,
+    "isOpen": true,
+    "inventory": { "O+": 35, "O-": 15, "A+": 28, "A-": 10, "B+": 20, "B-": 8, "AB+": 15, "AB-": 5 }
+  },
+  {
+    "id": "8",
+    "name": "Nagpur Life Blood Bank",
+    "address": "Sitabuldi, Nagpur",
+    "phone": "+91 7122345678",
+    "city": "Nagpur",
+    "lat": 21.1450,
+    "lng": 79.0800,
+    "isOpen": false,
+    "inventory": { "O+": 10, "O-": 4, "A+": 8, "A-": 2, "B+": 5, "B-": 1, "AB+": 3, "AB-": 1 }
+  }
+]
