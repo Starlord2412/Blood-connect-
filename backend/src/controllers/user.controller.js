@@ -130,9 +130,9 @@ const loginUser = asyncHandler(async (req, res) => {
 //find the bloodbanks based on the city/loction of user 
 const getBloodBanks = asyncHandler(async (req, res) => {
 
-  const userCity = req.user.city;
+ 
 
-  const bloodbanks = await BloodBank.find({ city: userCity, isOpen: true });
+  const bloodbanks = await BloodBank.find({  });
    
 
 
