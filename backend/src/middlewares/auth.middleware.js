@@ -9,14 +9,14 @@ export const verifyJwt=asyncHandler(
 
    try{
      const token=req.cookies?.accessToken || 
-              req.headers.authorization?.replace(/^Bearer\s+/i, '');
+              req.headers.get("Authorization")?.replace("Bearer ", '');
 
-    if(!token){
+    if(!token){ 
         return res.status(401).json({message:'Unauthorized'});
 
     }
-    const decoded=jwt.verify(token,process.env.JWT_SECRET);
-    const user=await User.findById(decoded._id).select('-password -refreshToken');
+    const decodedToken=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET );
+    const user=await User.findById(decodedToken?._id).select('-password -refreshToken');
 if(!user){
     return res.status(401).json({message:'Unauthorizeddd'});  
 }

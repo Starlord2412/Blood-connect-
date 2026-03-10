@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { BloodTypeCard } from "@/components/blood/BloodTypeCard";
 import { Button } from "@/components/ui/button";
+import AvailableDonarDashboard from "./AvailableDonarDashboard.jsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Droplet, 
@@ -43,6 +45,26 @@ const stats = [
 ];
 
 export default function Dashboard() {
+
+ const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+
+
+  if (!user) {
+  return <p>Loading...</p>;
+}
+
+  if(user.isAvailable){
+    return<AvailableDonarDashboard user={user}/>
+  }else{
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -198,4 +220,5 @@ export default function Dashboard() {
       <Footer />
     </div>
   );
+}
 }

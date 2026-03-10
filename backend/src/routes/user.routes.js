@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, registerUser,getBloodBanks } from "../controllers/user.controller.js";
+import { loginUser, registerUser ,logoutUser} from "../controllers/user.controller.js";
 //import {upload} from "../middlewares/multer.middleware.js";
 import { verifyJwt } from "../middlewares/auth.middleware.js";
 const router = Router();
@@ -19,7 +19,7 @@ registerUser);
 router.route('/login').post(loginUser);
 
 
-router.route('/bloodbanks').get(getBloodBanks);
+//router.route('/bloodbanks').get(getBloodBanks);
 //secured route
-
+router.post("/logout",verifyJwt,logoutUser);
 export default router; 

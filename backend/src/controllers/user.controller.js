@@ -3,8 +3,23 @@ import {ApiError} from '../utils/ApiError.js';
 import {User} from '../models/user.model.js';
 //import { uploadToCloudinary } from '../utils/cloudinary.js'; 
 import {ApiResponse} from '../utils/ApiResponse.js';  
+import react from 'react';
 //import { upload } from '../middlewares/multer.middleware.js';
-import BloodBank from '../models/bloodbank.model.js';
+
+const generateAccessAndRefreshTokens = async(userId)=>{
+  try{
+    const user = await User.findById(userId);
+   const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+    user.refreshToken = refreshToken;
+  await  user.save({ validateBeforeSave: false });
+  return { accessToken, refreshToken };
+  }catch(error){
+throw new ApiError(500,"something went wrong while generating tokens")
+  }
+  
+}
+
 
 const registerUser=asyncHandler(async(req,res)=>{   
 
@@ -20,7 +35,7 @@ const registerUser=asyncHandler(async(req,res)=>{
 
 
 
- const {fullName,email,password,phone,address,userType,city}=req.body
+ const {fullName,email,password,phone,address,userType}=req.body
  console.log("email:",email)
 
 
@@ -54,8 +69,7 @@ const user= await User.create({
   password,
   phone,
   address,
-  userType,
-  city
+  userType
   // username:username.toLowerCase()
 })
 
@@ -73,6 +87,10 @@ return res.status(201).json(
 )
 });
 
+
+
+
+//for login
 const loginUser = asyncHandler(async (req, res) => {
   
   //get email or username  and password
@@ -90,57 +108,92 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
 
-  const existinguser = await User.findOne({
+  const user = await User.findOne({
     $or: [
       { email: email },
       
     ]
   }).select("+password");
 
-  if (!existinguser) {
+  if (!user) {
     throw new ApiError(404, "User not found");
   }
 
-  const isPasswordCorrect = await existinguser.isPasswordCorrect(password);
+  const isPasswordCorrect = await user.isPasswordCorrect(password);
 
   if (!isPasswordCorrect) {
     throw new ApiError(401, "Invalid credentials");
   }
 
-  const accessToken = existinguser.generateAccessToken();
-  const refreshToken = existinguser.generateRefreshToken();
+ const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
 
-  existinguser.refreshToken = refreshToken;
-  await existinguser.save({ validateBeforeSave: false });
+ const LoggedInUser=await User.findById(user._id).select("-password -refreshToken");
+ 
+
 
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    path: "/",
+    secure: true
   });
 
-  return res.status(200).json(
-    new ApiResponse(200, { accessToken }, "Login successful")
-  );
+  return res.status(200)
+  .cookie("refreshToken",refreshToken)
+  .cookie("accessToken",accessToken)
+  .json(new ApiResponse(200,{
+  user:{
+   LoggedInUser: LoggedInUser,
+   isAvailable:true
+  },
+  accessToken,
+  refreshToken
+  },"Login successful"))
 });
 
 
 //find the bloodbanks based on the city/loction of user 
-const getBloodBanks = asyncHandler(async (req, res) => {
+// const getBloodBanks = asyncHandler(async (req, res) => {
 
  
 
-  const bloodbanks = await BloodBank.find({  });
+//   const bloodbanks = await BloodBank.find({  });
    
 
 
-  res.status(200).json(
-    new ApiResponse(200, bloodbanks, `${bloodbanks.length} open blood banks found`)
-  );
+//   res.status(200).json(
+//     new ApiResponse(200, bloodbanks, `${bloodbanks.length} open blood banks found`)
+//   );
+// });
+
+
+const logoutUser=asyncHandler(async(req,res)=>{
+  //get user id from req.user
+  //find user by id
+
+   await User.findByIdAndUpdate(req.user._id,{
+    $set:{
+      refreshToken:undefined
+    }
+  },
+    {
+      new:true
+    }
+   );
+
+   const options={
+    httpOnly:true,
+    secure:true
+   }
+
+   return res
+   .status(200)
+   .clearCookie("refreshToken",options)
+   .clearCookie("accessToken",options)
+   .json(new ApiResponse(200,null,"Logout successful"))
+
+
 });
 
 
 
-export {registerUser,loginUser,getBloodBanks};
+
+export {registerUser,loginUser,logoutUser};

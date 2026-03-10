@@ -40,10 +40,11 @@ const userSchema=new mongoose.Schema({
        
         required:true
     },
-    city:{
-        type:String,
-        required:true
-    },
+    
+    // city:{
+    //     type:String,
+    //     required:true
+    // },
     // //   watchHistory:[
     // //     {
     // //         type:mongoose.Schema.Types.ObjectId,    

@@ -30,11 +30,12 @@ isOpen:{
 ,inventory:{
     type:Map,
     of:Number
-},
-city:{
-    type:String,
-required:true
 }
+
+// city:{
+//     type:String,
+// required:true
+// }
 
 
 

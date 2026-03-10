@@ -38,6 +38,10 @@ export default function Login() {
 
 
       toast.success("Login successful!");
+//save data into local storage 
+localStorage.setItem("user",JSON.stringify(res.data.data.user));
+
+
       navigate("/dashboard");
     }, 1500);
   };
